@@ -1,21 +1,29 @@
 import React from 'react';
-import './SettingsWindow.css'; // Import CSS file for styling
+import './SettingsWindow.css';
 
-const SettingsWindow = ({ toggleSettings, handleThemeChange, isOpen }) => {
-  // No need for local state to track isOpen
+
+interface SettingsWindowProps {
+  handleThemeChange: (selectedTheme: 'light' | 'dark') => void;
+  settingsOpen: boolean;
+ 
+}
+
+
+const SettingsWindow: React.FC<SettingsWindowProps> = ({ handleThemeChange,  settingsOpen }) => {
 
   return (
-    <div className={`settings-container ${isOpen ? 'open' : ''}`}>
-      {/* No need for settings button */}
+    <div className={`settings-container ${ settingsOpen ? 'open' : ''}`}>
       <div className="settings-dropdown">
         <p>Theme</p>
         <div className="theme-options">
+       
           <label>
             <input
               type="radio"
               name="theme"
               value="light"
-              onChange={() => handleThemeChange('light')}
+              onChange={() =>  handleThemeChange('light')}
+             
             />
             Light 
           </label>
@@ -24,7 +32,8 @@ const SettingsWindow = ({ toggleSettings, handleThemeChange, isOpen }) => {
               type="radio"
               name="theme"
               value="dark"
-              onChange={() => handleThemeChange('dark')}
+              onChange={() =>  handleThemeChange('dark')}
+        
             />
             Dark 
           </label>

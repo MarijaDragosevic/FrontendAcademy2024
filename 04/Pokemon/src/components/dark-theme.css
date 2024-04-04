@@ -1,10 +1,11 @@
 /* dark-theme.css */
-:root {
+.dark-theme {
     --background-color: #1F2735;
     --text-color: #A1A1A1;
-    --header-color: #4D638C; /* New header color for dark theme */
-    --gray-div-color: #354159; /* New gray-div color for dark theme */
-    --settings-window-color: #4D638C; /* New settings window color for dark theme */
-    --settings-window-text-color: #EEEEEE; /* New text color for settings window for dark theme */
+    --header-color: #4D638C; 
+    --gray-div-color: #354159; 
+    --settings-window-color: #4D638C; 
+    --settings-window-text-color: #EEEEEE;
+    --types-text-color: #1F2735; 
     /* Define other dark theme colors */
   }

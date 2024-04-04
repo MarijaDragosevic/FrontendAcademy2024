@@ -1,0 +1,46 @@
+.header {
+    display: flex;
+    align-items: center;
+    height: 85px;
+    background: var(--header-color);
+    color: white;
+    position: fixed;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Adjust z-index as needed */
+  
+  }
+  
+  .header-title {
+    
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-align: left;
+    
+  }
+  .header-middle {
+    display: flex;
+    align-items: center;
+    width: 270px;
+    height: 50px;
+    top: 18px;
+    left: 731px;
+    gap: 0px;
+    opacity: 0px;
+  }
+  
+  .header-icon {
+    width: 50px;
+    height: 50px;
+    top: 18px;
+    left: 45px;
+    padding-left: 45px;
+   
+  }
+  
+  .right{
+    padding-right: 45px;
+  }

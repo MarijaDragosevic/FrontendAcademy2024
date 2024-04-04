@@ -9,10 +9,15 @@ interface Pokemon {
   url: string;
   height: number;
   weight: number;
-  sprites: string;
+  sprites: { front_default: string, back_default: string, other: { 'official-artwork': { front_default: string } } };
   stats: { base_stat: number }[];
   types: { type: { name: string } }[];
   flavorText: string;
+  species: { url: string };
+}
+interface SpeciesResponse {
+  flavor_text_entries: { language: { name: string }; version: { name: string }; flavor_text: string }[];
+  // Define other properties as needed
 }
 
 interface CardProps {
@@ -28,12 +33,12 @@ const Card: React.FC<CardProps> = ({ pokemon }) => {
         const response = await axios.get<Pokemon>(pokemon.url);
         const pokemonData = response.data;
 
-        const speciesResponse = await axios.get(pokemonData.species.url);
+        const speciesResponse = await axios.get<SpeciesResponse>(pokemonData.species.url);
         const speciesData = speciesResponse.data;
 
-        const flavorTextEntry = speciesData.flavor_text_entries.find(
-          (entry: any) => entry.language.name === 'en' && entry.version.name === 'red'
-        );
+        const flavorTextEntry = speciesData.flavor_text_entries.find((entry: { language: { name: string }; version: { name: string }; flavor_text: string }) =>
+        entry.language.name === 'en' && entry.version.name === 'red'
+      );
 
         const sanitizedFlavorText = flavorTextEntry ? flavorTextEntry.flavor_text.replace(/\f/g, ' ') : '';
 
@@ -77,7 +82,7 @@ const Card: React.FC<CardProps> = ({ pokemon }) => {
         key={type.type.name}
         style={{
           backgroundColor: typeColors[type.type.name.toLowerCase()],
-          color: 'white',
+          color: 'var(--types-text-color)',
     
           borderRadius: '15px',
           marginRight: '4px',
@@ -112,7 +117,7 @@ const Card: React.FC<CardProps> = ({ pokemon }) => {
               Health Points: <span className="value">{pokemonDetails?.stats[0].base_stat} HP</span>
             </p>
             <p className="variable">
-              Height: <span className="value">{pokemonDetails?.height * 10} cm</span>
+              Height: <span className="value">{pokemonDetails?.height ? pokemonDetails.height * 10 : ''} cm</span>
             </p>
             <p className="variable">
               Weight: <span className="value">{pokemonDetails?.weight} kg</span>
