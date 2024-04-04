@@ -1,0 +1,10 @@
+/* light-theme.css */
+:root {
+  --background-color: #FFFFFF;
+  --text-color: #262626;
+  --header-color: #E3350D; /* New header color for light theme */
+  --gray-div-color: #EEEEEE; /* New gray-div color for light theme */
+  --settings-window-color: #FFFFFF; /* New settings window color for light theme */
+  --settings-window-text-color: #262626; /* New text color for settings window for light theme */
+  /* Define other light theme colors */
+}
