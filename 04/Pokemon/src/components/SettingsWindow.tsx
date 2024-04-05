@@ -8,7 +8,6 @@ interface SettingsWindowProps {
  
 }
 
-
 const SettingsWindow: React.FC<SettingsWindowProps> = ({ handleThemeChange,  settingsOpen }) => {
 
   return (

@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './card.css';
 import heartIcon from '../assets/heart2.png';
+import heartIconActive from '../assets/full-heart.png';
+import {Pokemon}  from '../Pokemon';
 
-interface Pokemon {
-  id: number;
-  name: string;
-  url: string;
-  height: number;
-  weight: number;
-  sprites: { front_default: string, back_default: string, other: { 'official-artwork': { front_default: string } } };
-  stats: { base_stat: number }[];
-  types: { type: { name: string } }[];
-  flavorText: string;
-  species: { url: string };
-}
+
 interface SpeciesResponse {
   flavor_text_entries: { language: { name: string }; version: { name: string }; flavor_text: string }[];
   // Define other properties as needed
@@ -22,10 +13,13 @@ interface SpeciesResponse {
 
 interface CardProps {
   pokemon: Pokemon;
+  addToFavorites: (pokemon: Pokemon) => void;
+  removeFromFavorites: (pokemon: Pokemon) => void;
 }
 
-const Card: React.FC<CardProps> = ({ pokemon }) => {
+const Card: React.FC<CardProps> = ({ pokemon, addToFavorites, removeFromFavorites }) => {
   const [pokemonDetails, setPokemonDetails] = useState<Pokemon | null>(null);
+  const [isFavorite, setIsFavorite] = useState(false); // State to track whether the Pokémon is a favorite
 
   useEffect(() => {
     const fetchPokemonDetails = async () => {
@@ -37,8 +31,8 @@ const Card: React.FC<CardProps> = ({ pokemon }) => {
         const speciesData = speciesResponse.data;
 
         const flavorTextEntry = speciesData.flavor_text_entries.find((entry: { language: { name: string }; version: { name: string }; flavor_text: string }) =>
-        entry.language.name === 'en' && entry.version.name === 'red'
-      );
+          entry.language.name === 'en' && entry.version.name === 'red'
+        );
 
         const sanitizedFlavorText = flavorTextEntry ? flavorTextEntry.flavor_text.replace(/\f/g, ' ') : '';
 
@@ -83,13 +77,13 @@ const Card: React.FC<CardProps> = ({ pokemon }) => {
         style={{
           backgroundColor: typeColors[type.type.name.toLowerCase()],
           color: 'var(--types-text-color)',
-    
+
           borderRadius: '15px',
           marginRight: '4px',
-          display: 'inline-block', 
+          display: 'inline-block',
           minWidth: '68px',
-          minHeight: '16px', 
-          textAlign: 'center', 
+          minHeight: '16px',
+          textAlign: 'center',
           fontSize: '12px',
         }}
       >
@@ -101,8 +95,14 @@ const Card: React.FC<CardProps> = ({ pokemon }) => {
   const renderGrayDivAndCard = (onLeft: boolean) => {
     const grayDivJSX = (
       <div className="gray-div">
-        <img src={heartIcon} alt="heart-icon" className="heart-icon" />
-        <img src={pokemonDetails?.sprites.other['official-artwork'].front_default} alt="front_default" className="big-image" />
+        <img src={isFavorite ? heartIconActive : heartIcon} alt="heart-icon" className="heart-icon" onClick={() => {if (isFavorite) {
+    removeFromFavorites(pokemon);
+  } else {
+    addToFavorites(pokemon);
+  }
+  setIsFavorite(!isFavorite);
+}} />
+        <img src={isFavorite ?pokemonDetails?.sprites.other['official-artwork'].front_shiny:pokemonDetails?.sprites.other['official-artwork'].front_default} alt="front_default" className="big-image" />
       </div>
     );
 
@@ -132,8 +132,8 @@ const Card: React.FC<CardProps> = ({ pokemon }) => {
           <div className="evolutions">
             <p className="variable">Full view:</p>
             <div className="evolutions-image-section">
-              <img src={pokemonDetails?.sprites.front_default} alt="front_default" className="rectangle" />
-              <img src={pokemonDetails?.sprites.back_default} alt="back_default" className="rectangle" />
+              <img src={isFavorite? pokemonDetails?.sprites.front_shiny:pokemonDetails?.sprites.front_default} alt="front_default" className="rectangle" />
+              <img src={isFavorite? pokemonDetails?.sprites.back_shiny:pokemonDetails?.sprites.back_default} alt="back_default" className="rectangle" />
             </div>
           </div>
         </div>

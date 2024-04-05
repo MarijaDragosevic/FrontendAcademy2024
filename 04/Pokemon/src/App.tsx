@@ -1,30 +1,23 @@
 import { useState, useEffect } from 'react';
-import './App.css';
+import axios from 'axios';
 import Header from './components/Header';
 import Card from './components/Card'; 
 import SettingsWindow from './components/SettingsWindow'; 
-import axios from 'axios';
-import './components/light-theme.css'; // Import the light theme
-import './components/dark-theme.css'; // Import the light theme
-interface Pokemon {
-  id: number;
-  name: string;
-  url: string;
-  height: number;
-  weight: number;
-  sprites: { front_default: string, back_default: string, other: { 'official-artwork': { front_default: string } } };
-  stats: { base_stat: number }[];
-  types: { type: { name: string } }[];
-  flavorText: string;
-  species: { url: string };
-}
+import Modal from './components/Modal'; 
+import './App.css';
+import './components/light-theme.css';
+import './components/dark-theme.css';
+import {Pokemon}  from './Pokemon';
+
 
 function App(): JSX.Element {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [nextPageUrl, setNextPageUrl] = useState<string>('');
   const [observerElement, setObserverElement] = useState<HTMLDivElement | null>(null);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [settingsOpen, setSettingsOpen] = useState(false); // Define settingsOpen state
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [favorites, setFavorites] = useState<Pokemon[]>([]);
+  const [favoritesOpen, setFavoritesOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,31 +72,61 @@ function App(): JSX.Element {
   };
 
   const handleThemeChange = (selectedTheme: 'light' | 'dark') => {
-    setTheme(selectedTheme); // Update the theme in App component
-    console.log('Selected theme:', selectedTheme); // Log the selected theme
+    setTheme(selectedTheme);
   };
 
   const toggleSettings = () => {
-    setSettingsOpen(!settingsOpen); // Toggle settingsOpen state
+    setSettingsOpen(!settingsOpen);
   };
+
+  const toggleFavoritesModal = () => {
+    setFavoritesOpen(!favoritesOpen);
+  };
+
+  const addToFavorites = (pokemon: Pokemon) => {
+    setFavorites((prevFavorites) => [...prevFavorites, pokemon]);
+   
+  };
+
+  const removeFromFavorites = (pokemon: Pokemon) => {
+    
+    setFavorites((prevFavorites) => prevFavorites.filter((fav) => fav.url !== pokemon.url));
+  };
+
+  useEffect(() => {
+    console.log('Favorites:', favorites);
+  }, [favorites]);
 
   return (
     <div className={`App ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
-      <Header toggleSettings={toggleSettings} handleThemeChange={handleThemeChange} settingsOpen={settingsOpen} />
-      {/* Pass isOpen and handleThemeChange to SettingsWindow */}
-      <SettingsWindow handleThemeChange={handleThemeChange}  settingsOpen={settingsOpen} />
+      <Header 
+        toggleSettings={toggleSettings} 
+        handleThemeChange={handleThemeChange} 
+        settingsOpen={settingsOpen} 
+        toggleFavoritesModal={toggleFavoritesModal} 
+        favoritesOpen={favoritesOpen} 
+      />
+      <SettingsWindow 
+        handleThemeChange={handleThemeChange}  
+        settingsOpen={settingsOpen} 
+      />
+      <Modal isOpen={favoritesOpen} handleClose={toggleFavoritesModal} favorites={favorites}>
+  <div>
+    <h2>Favorites</h2>
+    {favorites.map((fav) => (
+      <div key={fav.id}>
+        <p>{fav.name}</p>
+        <button onClick={() => removeFromFavorites(fav)}>Remove</button>
+      </div>
+    ))}
+  </div>
+</Modal>
       <div className="card-container">
-        {pokemons.map((pokemon, index) => {
-          if (index === pokemons.length - 1) {
-            return (
-              <div key={pokemon.id} ref={setObserverElement}>
-                <Card pokemon={pokemon} />
-              </div>
-            );
-          } else {
-            return <Card key={pokemon.id} pokemon={pokemon} />;
-          }
-        })}
+        {pokemons.map((pokemon, index) => (
+          <div key={pokemon.id} ref={index === pokemons.length - 1 ? setObserverElement : null}>
+            <Card pokemon={pokemon} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
+          </div>
+        ))}
       </div>
     </div>
   );
