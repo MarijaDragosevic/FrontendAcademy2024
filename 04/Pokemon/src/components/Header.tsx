@@ -6,7 +6,7 @@ import settingsActiveIcon from "../assets/selected-settings.png"; // Import acti
 import heartActiveIcon from "../assets/selected-heart.png"; // Import active heart icon
 import SettingsWindow from './SettingsWindow'; // Import the SettingsWindow component
 import './Header.css';
-import Modal from './Modal'; // Import the Modal component
+
 
 interface HeaderProps {
   toggleSettings: () => void;
@@ -52,11 +52,6 @@ export default function Header({ toggleSettings, handleThemeChange, settingsOpen
         <img src={pokeIcon} alt="poke-icon" className="header-icon" />
         <div className="header-title">POKEDEX</div>
       </div>
-      {/* Render the Modal component for displaying favorites */}
-      <Modal isOpen={favoritesOpen} handleClose={toggleFavoritesModal}></Modal>
-
-      {/* Render SettingsWindow */}
-      {/* No need to pass handleThemeChange here */}
       <SettingsWindow settingsOpen={settingsOpen} handleThemeChange={handleThemeChange} />
       {/* Call handleSettingsClick when clicking on settings icon */}
       <img src={settingsSrc} alt="settings-icon" className="header-icon right" onClick={handleSettingsClick} />

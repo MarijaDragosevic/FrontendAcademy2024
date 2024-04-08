@@ -110,17 +110,9 @@ function App(): JSX.Element {
         handleThemeChange={handleThemeChange}  
         settingsOpen={settingsOpen} 
       />
-      <Modal isOpen={favoritesOpen} handleClose={toggleFavoritesModal} favorites={favorites}>
-  <div>
-    <h2>Favorites</h2>
-    {favorites.map((fav) => (
-      <div key={fav.id}>
-        <p>{fav.name}</p>
-        <button onClick={() => removeFromFavorites(fav)}>Remove</button>
-      </div>
-    ))}
-  </div>
-</Modal>
+      <Modal isOpen={favoritesOpen} handleClose={toggleFavoritesModal} favorites={favorites}/>
+
+
       <div className="card-container">
         {pokemons.map((pokemon, index) => (
           <div key={pokemon.id} ref={index === pokemons.length - 1 ? setObserverElement : null}>

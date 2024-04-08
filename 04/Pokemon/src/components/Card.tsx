@@ -94,15 +94,16 @@ const Card: React.FC<CardProps> = ({ pokemon, addToFavorites, removeFromFavorite
 
   const renderGrayDivAndCard = (onLeft: boolean) => {
     const grayDivJSX = (
-      <div className="gray-div">
-        <img src={isFavorite ? heartIconActive : heartIcon} alt="heart-icon" className="heart-icon" onClick={() => {if (isFavorite) {
+      <div className={`gray-div ${onLeft ? '' : 'left-div'}`}>
+        <img src={isFavorite ? heartIconActive : heartIcon} alt="heart-icon" className={`heart-icon ${onLeft ? '' : 'left-icon'}`} onClick={() => {if (isFavorite) {
     removeFromFavorites(pokemon);
   } else {
     addToFavorites(pokemon);
   }
   setIsFavorite(!isFavorite);
 }} />
-        <img src={isFavorite ?pokemonDetails?.sprites.other['official-artwork'].front_shiny:pokemonDetails?.sprites.other['official-artwork'].front_default} alt="front_default" className="big-image" />
+        <img src={isFavorite ?pokemonDetails?.sprites.other['official-artwork'].front_shiny:pokemonDetails?.sprites.other['official-artwork'].front_default} 
+        alt="front_default" className={`big-image ${onLeft ? 'right-anim' : 'left-image left-anim'}`} />
       </div>
     );
 

@@ -54,6 +54,7 @@
     display: flex;
     justify-content: center; /* Center content horizontally */
     align-items: center; /* Center content vertically */
+    animation-delay: 1s;
   }
   
   .container {
@@ -84,13 +85,25 @@
       width: 400px;
       height: 400px;
     }
-    .heart-icon {
+    .heart-icon{
       position: absolute;
       top: 10px; /* Adjust top position as needed */
       right: 10px; /* Adjust right position as needed */
       width: 35px; /* Adjust size as needed */
       height: 35px; /* Adjust size as needed */
       background-size: cover; /* Adjust to fit the size of the icon */
+      z-index: 1; 
+    }
+
+    .left-div{
+      justify-content: flex-start; 
+    }
+    .left-image{
+      padding-left: 100px;
+      animation: slideInToLeft 1s ease forwards;
+    }
+    .left-icon{
+      left: 10px;
     }
     .card {
         width: 864px;
@@ -105,4 +118,48 @@
         justify-content: center; /* Center content horizontally */
         align-items: center; /* Center content vertically */
         flex:1;
+        animation: fadeIn 2s ease forwards;
+        
+
+      }
+
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideInToRight {
+        from {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideInToLeft {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+
+      .left-anim{
+        animation: slideInToLeft 1s ease forwards;
+      }
+
+      .right-anim{
+        animation: slideInToRight 1s ease forwards;
       }
