@@ -4,8 +4,9 @@ const theme = createTheme({
   colors: {
     primary: 'var(--primary-default)',
     surface: {
-      s0: 'var(--surface.s0)',
-      s1: 'var(--surface.s1)',
+      s0: 'var(--surface-s0)',
+      s1: 'var(--surface-s1)',
+      s2: 'var(--surface-s2)',
     },
     onSurface: {
       nLv1: 'var(--on-surface-nLv1)',
