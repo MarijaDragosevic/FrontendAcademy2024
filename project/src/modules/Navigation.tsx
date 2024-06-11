@@ -1,15 +1,20 @@
 import { Box, Flex, Text } from '@kuma-ui/core';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IconAmericanFootball, IconBasketball, IconFootball } from './ComponentsSVG';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export const Navigation = () => {
     const router = useRouter();
-    const [selectedSport, setSelectedSport] = useState<null | string>(null);
+    const [selectedSport, setSelectedSport] = useState('Football');
+
+    useEffect(() => {
+        // Set the selected sport based on the current route
+        const sport = Array.isArray(router.query.sport) ? router.query.sport[0] : router.query.sport || 'football';
+        setSelectedSport(sport);
+    }, [router.query.sport]);
 
     // Function to format date as yyyy-mm-dd
-    const formatDate = (date: Date) => {
+    const formatDate = (date:Date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
@@ -21,7 +26,7 @@ export const Navigation = () => {
     const todayFormatted = formatDate(today);
 
     // Function to handle navigation to sport with today's date
-    const navigateToSportWithDate = (sport: string) => {
+    const navigateToSportWithDate = (sport:String) => {
         router.push(`/sport/${sport}/${todayFormatted}`);
     };
 

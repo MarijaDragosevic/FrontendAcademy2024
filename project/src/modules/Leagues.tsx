@@ -12,7 +12,7 @@ export const Leagues: React.FC<LeaguesProps> = ({ sport }) => {
 
     const { data: tournamentsData, error: tournamentsError } = useSWR(`/api/sport/${sport}/tournaments`)
 
-   console.log(tournamentsData)
+   //console.log(tournamentsData)
 
    if (tournamentsError) {
     return <Text fontSize="fontSizes.sm">Error loading tournaments...</Text>

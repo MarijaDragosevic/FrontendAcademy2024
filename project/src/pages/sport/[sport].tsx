@@ -8,7 +8,7 @@ import { Leagues } from '../../modules/Leagues';
 import { Events } from '../../modules/Events';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import EventItem from '../../modules/EventItem'; // Import EventItem component
+
 
 export default function Home() {
   const { setIsDark } = useThemeContext();
@@ -16,7 +16,7 @@ export default function Home() {
   console.log(router.asPath);
 
   // Function to format date as yyyy-mm-dd
-  const formatDate = (date) => {
+  const formatDate = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -28,22 +28,9 @@ export default function Home() {
 
   const [sportString, setSportString] = useState('football');
   const [eventData, setEventData] = useState(null);
-  const [selectedEvent, setSelectedEvent] = useState(null); // State to track the selected event
+ 
 
-  useEffect(() => {
-    const { sport, date } = router.query;
-    const currentPath = router.asPath; // Get current path
-    if (currentPath === '/sport/') {
-      // Redirect to /sport/football if current path is /sport/
-      router.push(`/sport/football/${formatDate(today)}`);
-    } else if (!date) {
-      // Redirect to /sport/football if sport query parameter is not provided
-      router.push(`/sport/${sport}/${formatDate(today)}`);
-    }
-    
-    const sportValue = sport ? (Array.isArray(sport) ? sport[0] : sport) : 'football';
-    setSportString(sportValue);
-  }, [router.query]);
+
 
   let currentDate = formatDate(today);
 

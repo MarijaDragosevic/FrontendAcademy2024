@@ -15,7 +15,7 @@ export const Events: React.FC<EventsProps> = ({ sport, eventData }) => {
     const { data: tournamentsData, error: tournamentsError } = useSWR(`/api/sport/${sport}/tournaments`);
     const [selectedRow, setSelectedRow] = useState<number | null>(null); // State to track selected row index
     const [selectedEventId, setSelectedEventId] = useState<string | null>(null); // State to track selected event id
-    console.log(sport)
+    //console.log(sport)
 
     if (tournamentsError) {
         return <Text fontSize="sm">Error loading tournaments...</Text>;
@@ -86,10 +86,10 @@ export const Events: React.FC<EventsProps> = ({ sport, eventData }) => {
                                             <Text fontSize="fontSizes.sm" marginLeft="10px">{event.tournament.name}</Text>
                                         </Box>
                                     )}
-                                 
+
                                     {/* Second row for event details */}
                                     <Box p={0} width="100%" display="flex" alignItems="center" backgroundColor={selectedRow === index ? '#e1edfe' : 'transparent'} // Change background color based on selected row
-                                         onClick={() => { setSelectedRow(index); setSelectedEventId(event.id); }}> 
+                                        onClick={() => { setSelectedRow(index); setSelectedEventId(event.id); }}>
                                         {/* First Column */}
                                         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 0 }}>
                                             {/* Time */}
@@ -104,7 +104,7 @@ export const Events: React.FC<EventsProps> = ({ sport, eventData }) => {
                                         {/* Second Column */}
                                         <div style={{ flex: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', minWidth: 0 }}>
                                             {/* Home Team */}
-                                            <div style={{ flex: 2, display: 'flex', alignItems: 'center', minWidth: 0 ,  marginLeft: '10px' }}>
+                                            <div style={{ flex: 2, display: 'flex', alignItems: 'center', minWidth: 0, marginLeft: '10px' }}>
                                                 {/* Team Image */}
                                                 <Image src={`/api/team/${event.homeTeam.id}/image`} w="24px" h="24x" />
 
@@ -113,34 +113,34 @@ export const Events: React.FC<EventsProps> = ({ sport, eventData }) => {
                                             </div>
 
                                             {/* Away Team */}
-                                            <div style={{ flex: 2, display: 'flex', alignItems: 'center', minWidth: 0 , marginTop: '10px',  marginLeft: '10px' }}>
+                                            <div style={{ flex: 2, display: 'flex', alignItems: 'center', minWidth: 0, marginTop: '10px', marginLeft: '10px' }}>
                                                 {/* Team Image */}
                                                 <Image src={`/api/team/${event.awayTeam.id}/image`} w="24px" h="24px" />
 
                                                 {/* Team Name */}
-                                                <Text fontSize="fontSizes.md"marginLeft="10px">{event.awayTeam.name}</Text>
-</div>
-</div>
-                                    {/* Third Column */}
-                                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', minWidth: 0, marginTop: '10px', marginRight: '20px'}}>
-                                        {/* Home Score */}
-                                        <Text fontSize="fontSizes.md">{event.homeScore.total}</Text>
-                                        {/* Away Score */}
-                                        <Text fontSize="fontSizes.md" mt={10}>{event.awayScore.total}</Text>
-                                    </div>
-                                </Box>
-                            </React.Fragment>
-                        );
-                    })
-                ) : (
-                    <Text fontSize="sm">No matches for this day.</Text>
-                )}
-            </VStack>
+                                                <Text fontSize="fontSizes.md" marginLeft="10px">{event.awayTeam.name}</Text>
+                                            </div>
+                                        </div>
+                                        {/* Third Column */}
+                                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', minWidth: 0, marginTop: '10px', marginRight: '20px' }}>
+                                            {/* Home Score */}
+                                            <Text fontSize="fontSizes.md">{event.homeScore.total}</Text>
+                                            {/* Away Score */}
+                                            <Text fontSize="fontSizes.md" mt={10}>{event.awayScore.total}</Text>
+                                        </div>
+                                    </Box>
+                                </React.Fragment>
+                            );
+                        })
+                    ) : (
+                        <Text fontSize="sm">No matches for this day.</Text>
+                    )}
+                </VStack>
+            </Box>
+            {/* Second container */}
+            <Box w="160px" h="150px" bg={selectedEventId ? "white" : "#eff3f8"} flex="1" style={{ borderRadius: '16px', marginLeft: '10px' }}>
+                {selectedEventId && <EventItem eventId={selectedEventId} sport={sport} />}
+            </Box>
         </Box>
-        {/* Second container */}
-        <Box w="160px" h="150px" bg={selectedEventId ? "white" : "#eff3f8"}  flex="1" style={{ borderRadius: '16px', marginLeft: '10px' }}>
-            {selectedEventId && <EventItem eventId={selectedEventId} sport={sport} />}
-        </Box>
-    </Box>
-);
+    );
 }
