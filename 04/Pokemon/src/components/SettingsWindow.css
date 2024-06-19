@@ -1,0 +1,58 @@
+.settings-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--settings-window-color);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1;
+    display: none; /* Initially hide the dropdown */
+    transition: opacity 0.1s ease; /* Smooth transition for opening */
+    width: 245px;
+height: 130px;
+
+
+  }
+  
+  .settings-container.open {
+    display: block; /* Show the dropdown when open */
+  }
+
+  
+  .theme-options {
+    margin-top: 10px;
+  }
+  
+  .theme-options label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .theme-options input[type="radio"] {
+    margin-right: 10px;
+    appearance: none; /* Remove default styles */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid black;
+    outline: none;
+  }
+  
+  .theme-options input[type="radio"]:checked {
+    background-color: black;
+  }
+  label{
+    color: var(   --settings-window-text-color);
+    font-size: small;
+  }
+  p{
+    color: var(--settings-window-text-color);
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+
+  }
+  

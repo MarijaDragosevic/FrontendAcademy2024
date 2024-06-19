@@ -1,0 +1,11 @@
+/* light-theme.css */
+.light-theme {
+  --background-color: #FFFFFF;
+  --text-color: #262626;
+  --header-color: #E3350D; 
+  --gray-div-color: #EEEEEE; 
+  --settings-window-color: #FFFFFF; 
+  --settings-window-text-color: #262626; 
+  --types-text-color: #FFFFFF; 
+
+}
